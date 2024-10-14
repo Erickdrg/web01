@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Decimal a Binario IEEE 754</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: #495057;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #343a40;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 12px 0;
+            border: 2px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="button"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        #resultado {
+            font-size: 18px;
+            font-weight: bold;
+            color: #343a40;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid #ced4da;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <h2>Conversión Decimal a Binario IEEE 754</h2>
+        <form>
+            <p>
+                Ingrese un número decimal:
+                <input type="text" id="num" placeholder="Ej. 11.1">
+            </p>
+
+            <input type="button" value="Convertir a Binario" onclick="convertirD()">
+        </form>
+
+        <div id="resultado">Representacion en Binario IEEE 754: </div>
+    </div>
+
+    <script>
+        function convertirD() {
+            let numero = parseFloat(document.getElementById("num").value);
+            if (isNaN(numero)) {
+                document.getElementById("resultado").innerText = "Por favor, ingrese un número válido.";
+                return;
+            }
+            let binario = convertirBinario(numero);
+            document.getElementById("resultado").innerText = "Binario IEEE 754: " + binario;
+        }
+
+        function convertirBinario(numero) {
+            let buffer = new ArrayBuffer(4); // Buffer de 4 bytes (32 bits)
+            let vistaFloat = new Float32Array(buffer); // Interpretar como flotante
+            vistaFloat[0] = numero; // Asignar el número
+            let vistaEntero = new Uint32Array(buffer); // Interpretar como entero sin signo
+            let binario = vistaEntero[0].toString(2).padStart(32, '0'); // Convertir a binario y completar con 0's si es necesario
+            return binario;
+        }
+    </script>
+
+</body>
+
+</html>
